@@ -28,20 +28,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: `${site.name} — ${site.tagline}`,
   description: site.description,
-  alternates: { canonical: "/" },
+  alternates: { canonical: `${site.url}/` },
   openGraph: {
     type: "website",
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
-    url: site.url,
+    url: `${site.url}/`,
     siteName: site.name,
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: site.name }],
+    images: [
+      { url: `${site.url}/og.png`, width: 1200, height: 630, alt: site.name },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
-    images: ["/og.png"],
+    images: [`${site.url}/og.png`],
   },
 };
 

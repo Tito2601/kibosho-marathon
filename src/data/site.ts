@@ -17,6 +17,7 @@ export const site = {
   phone: "+255 000 000 000", // PLACEHOLDER
   instagram: "#", // PLACEHOLDER
   builtBy: "Angatech",
-  // Used for metadata / OG canonical — update to the live domain post-sale.
-  url: "https://kibosho-marathon.pages.dev",
+  // Full public URL incl. the GitHub Pages project path. Update to the live
+  // domain (root, no path) post-sale.
+  url: "https://tito2601.github.io/kibosho-marathon",
 } as const;
