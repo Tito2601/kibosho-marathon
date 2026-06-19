@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kibosho Marathon — Run the green slopes of Kilimanjaro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#08231A;
+    --forest:#0E3A2A;
+    --moss:#16533B;
+    --vital:#6FBF44;     /* healthy green accent / CTA */
+    --lime:#9BD96A;      /* soft lime for gradients */
+    --snow:#F2F7EF;
+    --sky:#CBE4DD;       /* misty mountain accent */
+    --mist:#94AC9E;      /* muted text */
+    --line:rgba(148,172,158,.20);
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Inter",system-ui,sans-serif;background:var(--ink);color:var(--snow);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--vital);color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .mono{font-family:"Space Mono",monospace}
+  .display{font-family:"Anton",sans-serif;font-weight:400;line-height:.94;text-transform:uppercase;letter-spacing:.01em}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--vital)}
+  .eyebrow .dim{color:var(--mist)}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:12px 22px;border-radius:2px;cursor:pointer;border:0;transition:transform .15s ease,box-shadow .2s ease,background .2s,color .2s,border-color .2s}
+  .btn-vital{background:var(--vital);color:var(--ink);font-weight:700}
+  .btn-vital:hover{transform:translateY(-2px);box-shadow:0 12px 28px -12px var(--vital)}
+  .btn-ghost{background:transparent;color:var(--snow);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--vital);color:var(--vital)}
+
+  /* ---------- announcement bar ---------- */
+  .announce{background:var(--moss);color:var(--snow);font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:9px 20px}
+  .announce a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;transition:background .35s,border-color .35s,padding .35s;border-bottom:1px solid transparent}
+  nav.scrolled{background:rgba(8,35,26,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 28px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Anton",sans-serif;text-transform:uppercase;font-size:19px;letter-spacing:.04em}
+  .brand .peak{width:24px;height:24px;flex:0 0 auto}
+  .brand .peak path.m{fill:none;stroke:var(--vital);stroke-width:2.2}
+  .brand .peak path.s{fill:var(--snow)}
+  .navlinks{display:flex;align-items:center;gap:28px}
+  .navlinks a.lk{font-size:14px;opacity:.82;transition:opacity .2s}
+  .navlinks a.lk:hover{opacity:1;color:var(--vital)}
+  .menu-toggle{display:none;background:none;border:0;color:var(--snow);cursor:pointer;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.1em}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:92svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;text-align:center}
+  .hero .scene{position:absolute;inset:0;z-index:0}
+  .hero .scene .bg{position:absolute;inset:0;background:radial-gradient(110% 80% at 50% 18%, #1d6347 0%, #0E3A2A 42%, #08231A 78%)}
+  .hero .scene .glow{position:absolute;left:50%;top:14%;transform:translateX(-50%);width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(203,228,221,.5) 0%,rgba(155,217,106,.12) 38%,transparent 64%);filter:blur(4px)}
+  .hero .scene svg{position:absolute;left:0;bottom:0;width:100%;height:auto;display:block}
+  .hero-content{position:relative;z-index:3;padding:60px 0}
+  .hero .eyebrow{margin-bottom:20px}
+  .hero h1{font-size:clamp(44px,8.6vw,128px);max-width:16ch;margin:0 auto;text-shadow:0 2px 50px rgba(8,35,26,.5)}
+  .hero h1 .accent{color:var(--vital)}
+  .hero p.lead{margin:24px auto 0;max-width:52ch;font-size:clamp(16px,2vw,19px);color:#D6E5DA}
+  .hero-cta{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+  /* ---------- quick facts ---------- */
+  .facts{background:var(--forest);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .facts .row{display:flex;flex-wrap:wrap}
+  .fact{flex:1 1 0;min-width:180px;padding:24px 28px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+  .fact:last-child{border-right:0}
+  .fact .k{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist)}
+  .fact .v{font-family:"Anton",sans-serif;font-size:22px;letter-spacing:.02em}
+
+  /* ---------- section base ---------- */
+  section{position:relative}
+  .pad{padding:104px 0}
+  .rise{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .rise.in{opacity:1;transform:none}
+  .sec-head{margin-bottom:50px}
+  .sec-head h2{font-size:clamp(30px,5vw,60px);max-width:18ch}
+
+  /* ---------- intro + medal ---------- */
+  #intro{background:var(--ink)}
+  .intro-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:70px;align-items:center}
+  .intro-copy h2{font-size:clamp(28px,4.4vw,52px);margin:14px 0 22px}
+  .intro-copy p{color:#CCDBD0;font-size:16px;margin-bottom:16px;max-width:56ch}
+  .medal{width:100%;max-width:280px;margin:0 auto;display:block;animation:spin 60s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- countdown ---------- */
+  #countdown{background:linear-gradient(160deg,#0E3A2A,#16533B);border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center}
+  #countdown .eyebrow{margin-bottom:10px}
+  #countdown h2{font-size:clamp(26px,4vw,46px);margin-bottom:34px}
+  .clock{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+  .unit{background:rgba(8,35,26,.45);border:1px solid var(--line);border-radius:6px;padding:22px 10px;min-width:118px}
+  .unit .n{font-family:"Anton",sans-serif;font-size:clamp(40px,6vw,64px);line-height:1;color:var(--vital)}
+  .unit .l{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-top:10px}
+
+  /* ---------- stories ---------- */
+  #stories{background:var(--ink)}
+  .carousel{position:relative}
+  .slides{position:relative;min-height:340px}
+  .slide{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:0;opacity:0;transition:opacity .6s ease;pointer-events:none;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .slide.active{opacity:1;pointer-events:auto;position:relative}
+  .slide .photo{background:linear-gradient(135deg,#16533B,#0E3A2A);position:relative;min-height:300px;display:flex;align-items:flex-end;padding:22px}
+  .slide .photo::after{content:"Race photo";position:absolute;top:18px;left:18px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+  .slide .photo .mountain{position:absolute;inset:0;opacity:.5}
+  .slide .quote{background:var(--forest);padding:46px 44px;display:flex;flex-direction:column;justify-content:center}
+  .slide .quote .mark{font-family:"Anton",sans-serif;font-size:60px;color:var(--vital);line-height:.5}
+  .slide .quote p{font-size:clamp(19px,2.4vw,26px);font-weight:600;margin:18px 0 20px;line-height:1.35}
+  .slide .quote .who{font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.08em;color:var(--mist)}
+  .dots{display:flex;gap:10px;justify-content:center;margin-top:26px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--line);border:0;cursor:pointer;transition:background .2s,transform .2s}
+  .dot.active{background:var(--vital);transform:scale(1.25)}
+
+  /* ---------- packages ---------- */
+  #packages{background:var(--forest);border-top:1px solid var(--line)}
+  .pkg-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:46px}
+  .pkg-intro p{max-width:40ch;color:var(--mist);font-size:15px}
+  .pkgs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .pkg{background:var(--ink);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+  .pkg:hover{transform:translateY(-6px);border-color:rgba(111,191,68,.5)}
+  .pkg .img{height:180px;background:linear-gradient(135deg,#1d6347,#0E3A2A);position:relative}
+  .pkg .img .tag{position:absolute;top:14px;left:14px;background:var(--vital);color:var(--ink);font-family:"Space Mono",monospace;font-weight:700;font-size:12px;letter-spacing:.06em;padding:5px 10px;border-radius:2px}
+  .pkg .img .ph{position:absolute;bottom:14px;right:14px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(242,247,239,.5)}
+  .pkg .body{padding:24px;display:flex;flex-direction:column;flex:1}
+  .pkg .when{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.1em;color:var(--mist);text-transform:uppercase}
+  .pkg h3{font-size:21px;font-weight:700;margin:8px 0 16px}
+  .pkg ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:22px}
+  .pkg li{display:flex;gap:10px;font-size:14px;color:#CCDBD0}
+  .pkg li svg{flex:0 0 auto;width:16px;height:16px;margin-top:4px}
+  .pkg .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:18px}
+  .pkg .price{font-family:"Anton",sans-serif;font-size:26px}
+  .pkg .price span{font-family:"Space Mono",monospace;font-size:12px;color:var(--vital);vertical-align:super;letter-spacing:.04em}
+
+  /* ---------- gallery ---------- */
+  #gallery{background:var(--ink)}
+  .grid-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .tile{aspect-ratio:1/1;border-radius:6px;border:1px solid var(--line);background:linear-gradient(135deg,#16533B,#0E3A2A);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .tile:nth-child(3n){background:linear-gradient(135deg,#1d6347,#0E3A2A)}
+  .tile:nth-child(2n){background:linear-gradient(135deg,#0E3A2A,#16533B)}
+  .tile span{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,247,239,.4)}
+  .tile.big{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+
+  /* ---------- sponsors ---------- */
+  #sponsors{background:var(--forest);border-top:1px solid var(--line)}
+  .sp-grid{display:flex;flex-wrap:wrap;gap:18px;justify-content:center}
+  .sp{flex:1 1 200px;max-width:240px;height:96px;border:1px dashed var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist)}
+
+  /* ---------- newsletter ---------- */
+  #news{background:linear-gradient(160deg,#16533B,#0E3A2A);border-top:1px solid var(--line)}
+  .news-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .news-grid h2{font-size:clamp(28px,4.4vw,48px);margin-bottom:14px}
+  .news-grid p{color:#CCDBD0;max-width:46ch}
+  .news-form{display:flex;gap:10px;flex-wrap:wrap}
+  .news-form input{flex:1;min-width:220px;background:var(--ink);border:1px solid var(--line);border-radius:2px;color:var(--snow);padding:14px 16px;font-family:"Inter",sans-serif;font-size:15px}
+  .news-form input:focus{outline:2px solid var(--vital);outline-offset:1px;border-color:var(--vital)}
+
+  /* ---------- footer ---------- */
+  footer{background:#061a13;border-top:1px solid var(--line);padding:62px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
+  footer .brand{margin-bottom:16px}
+  footer p.addr{color:var(--mist);font-size:14px;max-width:28ch}
+  .foot-col h4{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--vital);margin-bottom:16px}
+  .foot-col a{display:block;color:#C3D4C7;font-size:14px;margin-bottom:10px;opacity:.85}
+  .foot-col a:hover{opacity:1;color:var(--vital)}
+  .foot-bottom{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:"Space Mono",monospace;font-size:12px;color:var(--mist);letter-spacing:.04em}
+  .foot-bottom b{color:var(--snow)}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:980px){
+    .navlinks{display:none}
+    .menu-toggle{display:block}
+    .intro-grid,.news-grid{grid-template-columns:1fr;gap:40px}
+    .pkgs{grid-template-columns:1fr;}
+    .slide{grid-template-columns:1fr}
+    .slide .photo{min-height:160px}
+    .grid-gal{grid-template-columns:repeat(2,1fr)}
+    .tile.big{grid-column:span 2;grid-row:auto;aspect-ratio:16/10}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .pad{padding:74px 0}
+  }
+  @media(max-width:540px){
+    .wrap{padding:0 20px}
+    nav{padding:14px 20px}
+    .fact{border-right:0;border-bottom:1px solid var(--line);flex:1 1 100%}
+    .unit{min-width:42%}
+    .foot-grid{grid-template-columns:1fr}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .rise{opacity:1;transform:none}
+    .medal{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">Entries for 2026 opening soon — <a href="#news">join the list</a> to be first on the start line</div>
+
+<nav id="nav">
+  <a href="#top" class="brand">
+    <svg class="peak" viewBox="0 0 24 24" aria-hidden="true"><path class="m" d="M2 21 L9 7 L13 14 L16 9 L22 21 Z"/><path class="s" d="M8.2 8.6 L9 7 L10.2 9.5 L9.1 8.8 Z"/></svg>
+    Kibosho&nbsp;Marathon
+  </a>
+  <div class="navlinks">
+    <a class="lk" href="#intro">The race</a>
+    <a class="lk" href="#packages">Packages</a>
+    <a class="lk" href="#stories">Reviews</a>
+    <a class="lk" href="#gallery">Gallery</a>
+    <a class="btn btn-vital" href="#packages">Register</a>
+  </div>
+  <button class="menu-toggle" id="menuToggle">MENU</button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="scene" aria-hidden="true">
+    <div class="bg"></div>
+    <div class="glow"></div>
+    <!-- distant kilimanjaro -->
+    <svg viewBox="0 0 1440 420" preserveAspectRatio="none" style="opacity:.85">
+      <defs>
+        <linearGradient id="kili" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a7a59"/><stop offset="1" stop-color="#0E3A2A"/></linearGradient>
+      </defs>
+      <path fill="url(#kili)" d="M0,420 L0,300 C160,280 300,250 460,200 C580,162 660,150 720,120 L790,150 C880,182 1000,225 1160,260 C1280,286 1370,300 1440,308 L1440,420 Z"/>
+      <path fill="#E8F1EA" opacity=".9" d="M690,128 L720,120 L760,138 L735,146 L716,135 L702,142 Z"/>
+    </svg>
+    <!-- green foreground slopes -->
+    <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path fill="#0b2c20" d="M0,260 L0,150 C200,120 360,140 560,90 C760,42 920,70 1120,110 C1260,138 1360,150 1440,150 L1440,260 Z"/>
+      <path fill="#08231A" d="M0,260 L0,200 C220,170 420,205 640,180 C880,152 1060,200 1280,196 C1340,195 1400,194 1440,196 L1440,260 Z"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="wrap">
+      <p class="eyebrow">KIBOSHO MARATHON &nbsp;·&nbsp; <span class="dim">SAT 1 AUGUST 2026</span></p>
+      <h1 class="display">Run the green slopes<br>of <span class="accent">Kilimanjaro</span></h1>
+      <p class="lead">A sunrise road race through the coffee highlands of Kibosho, in the shadow of Africa's highest peak. Four distances, one extraordinary mountain.</p>
+      <div class="hero-cta">
+        <a class="btn btn-vital" href="#packages">Register now</a>
+        <a class="btn btn-ghost" href="#intro">Discover the race</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- QUICK FACTS -->
+<section class="facts">
+  <div class="row">
+    <div class="fact"><span class="k">Distances</span><span class="v">42K · 21K · 10K · 5K</span></div>
+    <div class="fact"><span class="k">Location</span><span class="v">Kibosho, Kilimanjaro</span></div>
+    <div class="fact"><span class="k">Surface</span><span class="v">Tarmac &amp; gravel</span></div>
+    <div class="fact"><span class="k">Altitude</span><span class="v">1,420 – 2,180 m</span></div>
+  </div>
+</section>
+
+<!-- INTRO + MEDAL -->
+<section id="intro" class="pad">
+  <div class="wrap">
+    <div class="intro-grid">
+      <div class="intro-copy rise">
+        <p class="eyebrow">THE RACE</p>
+        <h2 class="display">One of the most beautiful marathons you'll ever run</h2>
+        <p>The Kibosho Marathon climbs the lush southern face of Mount Kilimanjaro, winding through terraced coffee farms, banana groves and the cool stone furrows that have carried mountain spring water for generations. You start in the cool of sunrise, climb steadily into thin highland air, then let the mountain carry you home.</p>
+        <p>Open to seasoned marathoners and first-time fun-runners alike, it's a race built around the village it runs through — with a Chagga cultural welcome, local food and Kilimanjaro coffee waiting at the finish. Join runners from across Tanzania and around the world for a morning on the roof of Africa.</p>
+        <a class="btn btn-vital" href="#packages" style="margin-top:8px">See distances &amp; packages</a>
+      </div>
+      <div class="rise">
+        <!-- finisher medal badge -->
+        <svg class="medal" viewBox="0 0 240 240" role="img" aria-label="Kibosho Marathon finisher medal">
+          <defs>
+            <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9BD96A"/><stop offset="1" stop-color="#6FBF44"/></linearGradient>
+            <path id="circ" d="M120,120 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0"/>
+          </defs>
+          <circle cx="120" cy="120" r="112" fill="none" stroke="url(#ring)" stroke-width="3"/>
+          <circle cx="120" cy="120" r="100" fill="#0E3A2A" stroke="var(--vital)" stroke-width="2"/>
+          <text font-family="Space Mono, monospace" font-size="12" letter-spacing="4" fill="#9BD96A">
+            <textPath href="#circ" startOffset="3%">KIBOSHO MARATHON · KILIMANJARO · 2026 ·</textPath>
+          </text>
+          <g transform="translate(120,128)">
+            <path d="M-44,30 L-12,-30 L4,2 L18,-22 L44,30 Z" fill="none" stroke="#6FBF44" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M-16,-22 L-12,-30 L-6,-18 L-12,-23 Z" fill="#E8F1EA"/>
+            <text x="0" y="52" text-anchor="middle" font-family="Anton, sans-serif" font-size="20" fill="#F2F7EF">FINISHER</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="countdown" class="pad">
+  <div class="wrap">
+    <p class="eyebrow">THE COUNTDOWN IS ON</p>
+    <h2 class="display">Race day — 1 August 2026</h2>
+    <div class="clock" id="clock">
+      <div class="unit"><div class="n" id="cd-d">--</div><div class="l">Days</div></div>
+      <div class="unit"><div class="n" id="cd-h">--</div><div class="l">Hours</div></div>
+      <div class="unit"><div class="n" id="cd-m">--</div><div class="l">Minutes</div></div>
+      <div class="unit"><div class="n" id="cd-s">--</div><div class="l">Seconds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section id="stories" class="pad">
+  <div class="wrap">
+    <div class="sec-head rise"><p class="eyebrow">REVIEWS</p><h2 class="display">From the runners</h2></div>
+    <div class="carousel rise">
+      <div class="slides" id="slides">
+        <div class="slide active">
+          <div class="photo"><svg class="mountain" viewBox="0 0 400 300" preserveAspectRatio="none"><path fill="#0b2c20" d="M0,300 L0,180 L140,90 L210,150 L290,70 L400,170 L400,300Z"/></svg></div>
+          <div class="quote"><div class="mark">&#8220;</div><p>The most beautiful race I've ever run. Hard on the legs, but every view was worth it.</p><div class="who">— Marathon runner, 2025</div></div>
+        </div>
+        <div class="slide">
+          <div class="photo"><svg class="mountain" viewBox="0 0 400 300" preserveAspectRatio="none"><path fill="#0b2c20" d="M0,300 L0,160 L120,110 L220,60 L300,140 L400,110 L400,300Z"/></svg></div>
+          <div class="quote"><div class="mark">&#8220;</div><p>I came for the mountain and stayed for the village welcome. An unforgettable morning.</p><div class="who">— Half marathon runner, 2025</div></div>
+        </div>
+        <div class="slide">
+          <div class="photo"><svg class="mountain" viewBox="0 0 400 300" preserveAspectRatio="none"><path fill="#0b2c20" d="M0,300 L0,200 L100,120 L180,170 L280,80 L400,150 L400,300Z"/></svg></div>
+          <div class="quote"><div class="mark">&#8220;</div><p>My first ever 10K, and I'll be back next year. The finish-line coffee alone is worth it.</p><div class="who">— 10K runner, 2025</div></div>
+        </div>
+      </div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages" class="pad">
+  <div class="wrap">
+    <div class="pkg-intro rise">
+      <div><p class="eyebrow" style="margin-bottom:14px">UNFOLD THE EXPERIENCE</p><h2 class="display" style="font-size:clamp(28px,4.4vw,52px)">Choose your<br>adventure</h2></div>
+      <p>International runners can pair their race entry with a Kilimanjaro stay, transfers and guided sightseeing. Local runners can grab an entry-only place. All packages include chip timing, a finisher medal and a race tee.</p>
+    </div>
+    <div class="pkgs">
+      <div class="pkg rise">
+        <div class="img"><span class="tag">USD 690</span><span class="ph">Photo</span></div>
+        <div class="body">
+          <div class="when">31 Jul – 3 Aug · 4 days</div>
+          <h3>Kilimanjaro Runner Package</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>3 nights' lodge near Moshi</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Airport transfers (JRO)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Race entry + medal + tee</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Kilimanjaro foothills day tour</li>
+          </ul>
+          <div class="foot"><div class="price"><span>USD</span> 690</div><a class="btn btn-ghost" href="#news">View package</a></div>
+        </div>
+      </div>
+      <div class="pkg rise">
+        <div class="img"><span class="tag">USD 290</span><span class="ph">Photo</span></div>
+        <div class="body">
+          <div class="when">31 Jul – 2 Aug · 2 days</div>
+          <h3>Weekend Race Package</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>1 night near the start line</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Race-morning shuttle</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Race entry + medal + tee</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Post-race celebration</li>
+          </ul>
+          <div class="foot"><div class="price"><span>USD</span> 290</div><a class="btn btn-ghost" href="#news">View package</a></div>
+        </div>
+      </div>
+      <div class="pkg rise">
+        <div class="img"><span class="tag">FROM TZS 10K</span><span class="ph">Photo</span></div>
+        <div class="body">
+          <div class="when">Race day only · 1 Aug</div>
+          <h3>Local Runner Entry</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Entry to any distance</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Chip timing &amp; live results</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Finisher medal + race tee</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#6FBF44" stroke-width="2.6"><path d="M4 12l5 5L20 6"/></svg>Mobile-money checkout</li>
+          </ul>
+          <div class="foot"><div class="price"><span>TZS</span> 10K+</div><a class="btn btn-vital" href="#news">Register</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="pad">
+  <div class="wrap">
+    <div class="sec-head rise"><p class="eyebrow">ON THE MOUNTAIN</p><h2 class="display">Gallery</h2></div>
+    <div class="grid-gal rise">
+      <div class="tile big"><span>Add hero photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+      <div class="tile"><span>Photo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors" class="pad">
+  <div class="wrap">
+    <div class="sec-head rise" style="text-align:center"><p class="eyebrow">PARTNERS &amp; SPONSORS</p><h2 class="display" style="margin:8px auto 0">Backed by</h2></div>
+    <div class="sp-grid rise">
+      <div class="sp">Sponsor logo</div>
+      <div class="sp">Sponsor logo</div>
+      <div class="sp">Sponsor logo</div>
+      <div class="sp">Sponsor logo</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="news" class="pad">
+  <div class="wrap">
+    <div class="news-grid">
+      <div class="rise">
+        <p class="eyebrow" style="margin-bottom:12px">STAY ON THE TRAIL</p>
+        <h2 class="display">Be first to the start line</h2>
+        <p>Subscribe for entry openings, training tips for altitude, and race-day news from the slopes of Kilimanjaro.</p>
+      </div>
+      <div class="rise">
+        <div class="news-form">
+          <input type="email" id="newsEmail" placeholder="your@email.com" aria-label="Email address">
+          <button class="btn btn-vital" id="newsBtn">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="brand"><svg class="peak" viewBox="0 0 24 24" aria-hidden="true"><path class="m" d="M2 21 L9 7 L13 14 L16 9 L22 21 Z"/><path class="s" d="M8.2 8.6 L9 7 L10.2 9.5 L9.1 8.8 Z"/></svg>Kibosho&nbsp;Marathon</a>
+        <p class="addr">Kibosho, Moshi Rural District,<br>Kilimanjaro Region, Tanzania.<br>On the green southern slopes of Mount Kilimanjaro.</p>
+      </div>
+      <div class="foot-col"><h4>Event</h4><a href="#intro">The race</a><a href="#packages">Packages &amp; entry</a><a href="#stories">Reviews</a><a href="#gallery">Gallery</a></div>
+      <div class="foot-col"><h4>Visit</h4><a href="#">Getting to Kibosho</a><a href="#">Where to stay</a><a href="#">Kilimanjaro tours</a><a href="#">Travel partners</a></div>
+      <div class="foot-col"><h4>Contact</h4><a href="mailto:hello@kiboshomarathon.co.tz">hello@kiboshomarathon.co.tz</a><a href="tel:+255000000000">+255 000 000 000</a><a href="#">Instagram</a><a href="#">Become a sponsor</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Kibosho Marathon. All rights reserved.</span>
+      <span>Built on the slopes of Kilimanjaro by <b>Angatech</b></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 30); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // countdown
+  var target = new Date('2026-08-01T06:00:00+03:00').getTime();
+  function pad(n){ return (n<10?'0':'')+n; }
+  function tick(){
+    var diff = target - Date.now();
+    if(diff < 0) diff = 0;
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor(diff%86400000/3600000);
+    var m = Math.floor(diff%3600000/60000);
+    var s = Math.floor(diff%60000/1000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+  }
+  tick(); setInterval(tick, 1000);
+
+  // carousel
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dotsWrap = document.getElementById('dots');
+  var idx = 0, timer;
+  slides.forEach(function(_, i){
+    var b = document.createElement('button');
+    b.className = 'dot' + (i===0?' active':'');
+    b.setAttribute('aria-label','Go to review ' + (i+1));
+    b.addEventListener('click', function(){ go(i); reset(); });
+    dotsWrap.appendChild(b);
+  });
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
+  function go(n){
+    slides[idx].classList.remove('active'); dots[idx].classList.remove('active');
+    idx = (n + slides.length) % slides.length;
+    slides[idx].classList.add('active'); dots[idx].classList.add('active');
+  }
+  function reset(){ clearInterval(timer); timer = setInterval(function(){ go(idx+1); }, 5500); }
+  reset();
+
+  // scroll reveals
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.rise').forEach(function(el){ io.observe(el); });
+
+  // mobile menu
+  document.getElementById('menuToggle').addEventListener('click', function(){
+    document.getElementById('packages').scrollIntoView({behavior:'smooth'});
+  });
+
+  // newsletter placeholder
+  document.getElementById('newsBtn').addEventListener('click', function(){
+    var v = document.getElementById('newsEmail').value;
+    alert(v ? 'Thanks! Connect this form to your mailing list or CRM.' : 'Enter an email address. (Connect this form to your mailing list.)');
+  });
+</script>
+</body>
+</html>
